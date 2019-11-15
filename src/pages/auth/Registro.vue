@@ -44,7 +44,8 @@
 
     <br>
 
-    <q-btn to="login" label="Voltar" type="reset" color="secondary" class="full-width" />
+    <!-- <q-btn to="login" label="Voltar" type="reset" color="secondary" class="full-width" /> -->
+    <q-btn v-go-back="'/'" label="Voltar" type="reset" color="secondary" class="full-width" />
 
   </div>
 </template>
