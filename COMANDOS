@@ -1,0 +1,9 @@
+COMANDOS
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /home/eduardo/Proj_Quasar/app-quasar-api/chave/chave.keystore app-release-unsigned.apk chave
+
+/home/eduardo/Android/Sdk/build-tools/29.0.2/zipalign -v 4 app-release-unsigned.apk app.apk
+
+----------------------------------------
+
+https://stackoverflow.com/questions/57294503/android-back-button-handling-on-quasar-or-vue-js

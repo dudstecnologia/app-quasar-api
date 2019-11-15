@@ -30,6 +30,8 @@
 
     <q-btn to="registro" label="Registrar" type="reset" color="secondary" class="full-width" />
 
+    {{ teste }}
+
   </div>
 </template>
 
@@ -40,14 +42,31 @@ export default {
       user: [],
       email: '',
       password: '',
+      teste: ''
     }
   },
   created () {
     this.$emit("altera-titulo", 'Login');
   },
+  mounted() {
+      this.teste = 'montou o componente';
+      if (this.$q.platform.is.cordova) {
+        document.addEventListener("backbutton", this.onClickBackButton, false);
+      }
+  },
   methods: {
     logar () {
-      console.log("Clicou em Entrar")
+      // console.log("Clicou em Entrar");
+      navigator.app.exitApp();
+    },
+    // onBackKey() {
+    //   this.teste = 'Clicou em Voltar'
+    //   console.log("Clicou em Voltar");
+    //   navigator.app.exitApp();
+    // },
+    onClickBackButton() {
+      this.teste = 'Clicou em Voltar'
+      navigator.app.exitApp();
     }
   }
 }

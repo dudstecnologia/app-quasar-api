@@ -13,10 +13,7 @@ const routes = [
     path: '/app',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      {
-        path: '/app',
-        component: () => import('pages/Index.vue')
-      }
+      { path: '/app', component: () => import('pages/Index.vue') }
     ]
   }
 ]

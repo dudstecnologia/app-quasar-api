@@ -129,7 +129,7 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
-      // backButtonExit: true/false,
+      // backButtonExit: true/false
       // id: 'br.com.dudstecnologia.quasarapi',
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
     },
