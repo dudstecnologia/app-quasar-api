@@ -61,12 +61,14 @@
     <!-- <q-btn to="login" label="Voltar" type="reset" color="secondary" class="full-width" /> -->
     <q-btn v-go-back="'/'" label="Voltar" type="reset" color="secondary" class="full-width" />
 
-    {{ nome }}
+    <p>{{ teste }}</p>
 
   </div>
 </template>
 
 <script>
+// import ValidaErros from '../../components/ValidaErros'
+
 export default {
   data () {
     return {
@@ -76,14 +78,14 @@ export default {
         password: '',
         password_confirmation: '',
       },
-      nome: ''
+      teste: 'teste'
     }
   },
   created () {
     this.$emit("altera-titulo", 'Registro');
     // this.$toast.success('Teste de mensagem', '')
     // this.$toast.error('Teste de mensagem', '')
-    this.nome = this.$q.localStorage.getItem('token');
+    this.nome = this.$q.localStorage.getItem('nome');
     // this.$router.push('/app');
   },
   methods: {
@@ -102,8 +104,16 @@ export default {
 
           })
           .catch((err) => {
-            console.log(err);
-            this.$toast.error('Ocorreu um erro');
+            // console.log(err);
+            // this.$toast.error('Ocorreu um erro');
+            // this.teste = err.response.data.errors
+
+            if (err.response.status == 422){
+              this.teste = Object.values(err.response.data.errors).flat();
+              this.$toast.error(this.teste[0]);
+            } else {
+              this.$toast.error('Ocorreu um erro');
+            }
           });
     }
   }
