@@ -8,11 +8,10 @@
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
           icon="menu"
-          aria-label="Menu"
-        />
+          aria-label="Menu" />
 
         <q-toolbar-title>
-          Contatos
+          {{ titulo }}
         </q-toolbar-title>
 
       </q-toolbar>
@@ -26,7 +25,8 @@
     >
       <q-list>
         <q-item-label header>Menu Principal</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
+
+        <q-item clickable tag="a" to="contatos" @click="titulo = 'Contatos'">
           <q-item-section avatar>
             <q-icon name="people" />
           </q-item-section>
@@ -35,7 +35,7 @@
             <q-item-label caption>Lista de Contatos</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.quasar.dev">
+        <q-item clickable tag="a" to="cadastro" @click="titulo = 'Cadastro'">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
@@ -44,7 +44,7 @@
             <q-item-label caption>Novo Contato</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
+        <q-item clickable tag="a" to="perfil" @click="titulo = 'Perfil'">
           <q-item-section avatar>
             <q-icon name="account_circle" />
           </q-item-section>
@@ -75,7 +75,8 @@
 export default {
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      titulo: 'Contatos'
     }
   },
   methods: {

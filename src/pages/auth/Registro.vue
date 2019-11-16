@@ -28,12 +28,12 @@
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Informe a senha']" >
         <template v-slot:append>
-            <q-icon
-              :name="tipoSenha ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="tipoSenha = !tipoSenha"
-            />
-          </template>
+          <q-icon
+            :name="tipoSenha ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="tipoSenha = !tipoSenha"
+          />
+        </template>
       </q-input>
 
       <q-input
@@ -82,7 +82,7 @@ export default {
 
             this.$toast.success('Cadastrado com sucesso');
 
-            this.$router.replace('/app');
+            this.$router.replace('/contatos');
           })
           .catch((err) => {
             if (err.response.status == 422){
