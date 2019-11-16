@@ -5,7 +5,7 @@ const verificaAutenticacao = (to, from, next) => {
     navigator.app.exitApp();
   }
 
-  if(localStorage.getItem('token') && to.path != '/contatos') {
+  if(localStorage.getItem('token') && to.path == '/') {
     next('/contatos');
   }
 
@@ -36,11 +36,13 @@ const routes = [
       },
       {
         path: '/cadastro',
-        component: () => import('pages/Cadastro.vue')
+        component: () => import('pages/Cadastro.vue'),
+        beforeEnter: verificaAutenticacao
       },
       {
         path: '/perfil',
-        component: () => import('pages/Perfil.vue')
+        component: () => import('pages/Perfil.vue'),
+        beforeEnter: verificaAutenticacao
       }
     ]
   }
