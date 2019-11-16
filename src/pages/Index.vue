@@ -6,6 +6,16 @@
 
 <script>
 export default {
-  name: 'PageIndex'
+  beforeCreate () {
+    // this.$emit("altera-titulo", 'Login');
+    // console.log("Criou");
+    try {
+      if(!this.$q.localStorage.getItem('user').token) {
+        this.$router.push('/login');
+      }
+    } catch (e) {
+      this.$router.push('/login');
+    }
+  },
 }
 </script>

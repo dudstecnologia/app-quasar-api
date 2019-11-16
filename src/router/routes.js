@@ -2,9 +2,16 @@
 const routes = [
   {
     path: '/',
+    component: () => import('layouts/MyLayout.vue'),
+    children: [
+      { path: '/', component: () => import('pages/Index.vue') }
+    ],
+  },
+  {
+    path: '/login',
     component: () => import('layouts/Auth.vue'),
     children: [
-      { path: '/', component: () => import('pages/auth/Login.vue') },
+      { path: '/login', component: () => import('pages/auth/Login.vue') },
       { path: '/registro', component: () => import('pages/auth/Registro.vue') }
     ],
   },

@@ -61,6 +61,8 @@
     <!-- <q-btn to="login" label="Voltar" type="reset" color="secondary" class="full-width" /> -->
     <q-btn v-go-back="'/'" label="Voltar" type="reset" color="secondary" class="full-width" />
 
+    {{ nome }}
+
   </div>
 </template>
 
@@ -74,14 +76,15 @@ export default {
         password: '',
         password_confirmation: '',
       },
-      // dialog: true,
-      // position: 'bottom'
+      nome: ''
     }
   },
   created () {
     this.$emit("altera-titulo", 'Registro');
     // this.$toast.success('Teste de mensagem', '')
     // this.$toast.error('Teste de mensagem', '')
+    this.nome = this.$q.localStorage.getItem('user').token;
+    // this.$router.push('/app');
   },
   methods: {
     registrar () {
@@ -90,6 +93,7 @@ export default {
             console.log(res);
             this.$q.localStorage.set('user', res.data)
             this.$toast.success('Salvo com sucesso');
+
           })
           .catch((err) => {
             console.log(err);
