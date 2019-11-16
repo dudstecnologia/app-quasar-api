@@ -1,12 +1,26 @@
 <template>
   <div class="q-pa-md">
+
+    <!-- <q-dialog v-model="dialog" :position="position">
+      <q-card class="bg-negative text-white">
+        <q-card-section>
+          Mensagem de Teste
+        </q-card-section>
+      </q-card>
+    </q-dialog> -->
+
+    <!-- <dialog-toast dialog='true'
+      position="top"
+      type='true'
+      msg="Mensagem de Teste"/> -->
+
     <q-form
       @submit="registrar"
       class="q-gutter-md"
     >
       <q-input
         outlined
-        v-model="name"
+        v-model="user.name"
         label="Seu nome *"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Informe o nome']"
@@ -14,7 +28,7 @@
 
       <q-input
         outlined
-        v-model="email"
+        v-model="user.email"
         label="Seu email *"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Informe o email']"
@@ -22,7 +36,7 @@
 
       <q-input
         outlined
-        v-model="password"
+        v-model="user.password"
         label="Sua Senha *"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Informe a senha']"
@@ -30,7 +44,7 @@
 
       <q-input
         outlined
-        v-model="password_confirmation"
+        v-model="user.password_confirmation"
         label="Confirme a Senha *"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Informe a senha']"
@@ -54,18 +68,33 @@
 export default {
   data () {
     return {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
+      user: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      },
+      // dialog: true,
+      // position: 'bottom'
     }
   },
   created () {
     this.$emit("altera-titulo", 'Registro');
+    // this.$toast.success('Teste de mensagem', '')
+    // this.$toast.error('Teste de mensagem', '')
   },
   methods: {
     registrar () {
-      console.log("Clicou em Registrar")
+      this.$axios.post('http://127.0.0.1:8000/api/register', this.user)
+          .then((res) => {
+            console.log(res);
+            this.$q.localStorage.set('user', res.data)
+            this.$toast.success('Salvo com sucesso');
+          })
+          .catch((err) => {
+            console.log(err);
+            this.$toast.error('Ocorreu um erro');
+          });
     }
   }
 }

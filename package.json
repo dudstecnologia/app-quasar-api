@@ -1,8 +1,8 @@
 {
   "name": "app-quasar-api",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "Aplicativo para estudo sobre Quasar",
+  "productName": "CRUD API",
   "cordovaId": "br.com.dudstecnologia.quasarapi",
   "capacitorId": "",
   "author": "Eduardo <eduardo@dudstecnologia.com.br>",
@@ -13,7 +13,9 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
-    "quasar": "^1.0.0"
+    "izitoast": "^1.4.0",
+    "quasar": "^1.0.0",
+    "vue-izitoast": "^1.2.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0"
