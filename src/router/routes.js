@@ -1,17 +1,8 @@
 import { Platform } from 'quasar'
 
-const routes = [
-  {
-    path: '/',
-    component: () => import('layouts/Auth.vue'),
-    children: [
-      {
-        path: '/',
-        component: () => import('pages/auth/Login.vue'),
-        beforeEnter: (to, from, next) => {
+ /*(to, from, next) => {
 
           if(from.path == '/app' && to.path == '/' && localStorage.getItem('token') && Platform.is.cordova) {
-            console.log('Deve Fechar a aplicação');
             navigator.app.exitApp();
           }
 
@@ -20,7 +11,28 @@ const routes = [
           }
 
           next();
-        }
+        }*/
+const verificaAutenticacao = (to, from, next) => {
+  if(from.path == '/app' && to.path == '/' && localStorage.getItem('token') && Platform.is.cordova) {
+    navigator.app.exitApp();
+  }
+
+  if(localStorage.getItem('token') && to.path != '/app') {
+    next('/app');
+  }
+
+  next();
+}
+
+const routes = [
+  {
+    path: '/',
+    component: () => import('layouts/Auth.vue'),
+    children: [
+      {
+        path: '/',
+        component: () => import('pages/auth/Login.vue'),
+        beforeEnter: verificaAutenticacao
       },
       { path: '/registro', component: () => import('pages/auth/Registro.vue') }
     ],
@@ -71,17 +83,12 @@ const routes = [
     path: '/app',
     component: () => import('layouts/LayoutPadrao.vue'),
     children: [
-      { path: '/app', component: () => import('pages/Index.vue') }
+      { path: '/app', component: () => import('pages/Index.vue'), beforeEnter: verificaAutenticacao }
     ]
   }
 ]
 
-const naoAutenticado = (to, from, next) => {
-  // navigator.app.exitApp();
-  console.log(to);
-  console.log(from);
-  console.log(next);
-}
+
 
 if (process.env.MODE !== 'ssr') {
   routes.push({

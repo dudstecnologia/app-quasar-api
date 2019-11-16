@@ -53,7 +53,7 @@
             <q-item-label caption>Seus Dados</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
+        <q-item clickable @click="logoff">
           <q-item-section avatar>
             <q-icon name="exit_to_app" />
           </q-item-section>
@@ -76,6 +76,15 @@ export default {
   data () {
     return {
       leftDrawerOpen: false
+    }
+  },
+  methods: {
+    logoff () {
+      localStorage.removeItem('name')
+      localStorage.removeItem('email')
+      localStorage.removeItem('token')
+
+      this.$router.push('/');
     }
   }
 }

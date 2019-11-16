@@ -30,10 +30,10 @@
 
     <q-btn to="registro" label="Registrar" type="reset" color="secondary" class="full-width" />
 
-    <br>
+    <!-- <br>
 
     <q-btn @click="back" label="Teste Voltar" type="reset" color="secondary" class="full-width" />
-
+ -->
     {{ token }}
 
   </div>

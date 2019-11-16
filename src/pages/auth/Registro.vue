@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     registrar () {
-      this.$axios.post('http://127.0.0.1:8000/api/register', this.user)
+      this.$axios.post('http://192.168.1.20:8000/api/register', this.user)
           .then((res) => {
             console.log(res);
             // this.$q.localStorage.set('user', res.data)
@@ -96,7 +96,7 @@ export default {
             this.$q.localStorage.set('email', res.data.email)
             this.$q.localStorage.set('token', res.data.token)
 
-            this.$router.push('/app');
+            this.$router.replace('/app');
 
             this.$toast.success('Salvo com sucesso');
 
