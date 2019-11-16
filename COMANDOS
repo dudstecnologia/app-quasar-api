@@ -6,4 +6,7 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore /home/eduardo/P
 
 ----------------------------------------
 
-https://stackoverflow.com/questions/57294503/android-back-button-handling-on-quasar-or-vue-js
+export ANDROID_HOME="$HOME/Android/Sdk"
+PATH=$PATH:$ANDROID_HOME/tools; PATH=$PATH:$ANDROID_HOME/platform-tools
+
+----------------------------------------

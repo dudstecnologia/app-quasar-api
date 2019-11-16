@@ -1,54 +1,48 @@
 <template>
   <div class="q-pa-md">
 
-    <!-- <q-dialog v-model="dialog" :position="position">
-      <q-card class="bg-negative text-white">
-        <q-card-section>
-          Mensagem de Teste
-        </q-card-section>
-      </q-card>
-    </q-dialog> -->
-
-    <!-- <dialog-toast dialog='true'
-      position="top"
-      type='true'
-      msg="Mensagem de Teste"/> -->
-
     <q-form
       @submit="registrar"
-      class="q-gutter-md"
-    >
+      class="q-gutter-md" >
+
       <q-input
         outlined
         v-model="user.name"
         label="Seu nome *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o nome']"
-      />
+        :rules="[ val => val && val.length > 0 || 'Informe o nome']" />
 
       <q-input
+        type="email"
         outlined
         v-model="user.email"
         label="Seu email *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o email']"
-      />
+        :rules="[ val => val && val.length > 0 || 'Informe o email']" />
 
       <q-input
+        :type="tipoSenha ? 'password' : 'text'"
         outlined
         v-model="user.password"
         label="Sua Senha *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']"
-      />
+        :rules="[ val => val && val.length > 0 || 'Informe a senha']" >
+        <template v-slot:append>
+            <q-icon
+              :name="tipoSenha ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="tipoSenha = !tipoSenha"
+            />
+          </template>
+      </q-input>
 
       <q-input
+        :type="tipoSenha ? 'password' : 'text'"
         outlined
         v-model="user.password_confirmation"
         label="Confirme a Senha *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']"
-      />
+        :rules="[ val => val && val.length > 0 || 'Informe a senha']" />
 
       <div class="q-gutter-sm">
         <q-btn label="Registrar" type="submit" color="primary" class="full-width" />
@@ -58,17 +52,11 @@
 
     <br>
 
-    <!-- <q-btn to="login" label="Voltar" type="reset" color="secondary" class="full-width" /> -->
     <q-btn v-go-back="'/'" label="Voltar" type="reset" color="secondary" class="full-width" />
-
-    <p>{{ teste }}</p>
-
   </div>
 </template>
 
 <script>
-// import ValidaErros from '../../components/ValidaErros'
-
 export default {
   data () {
     return {
@@ -78,36 +66,25 @@ export default {
         password: '',
         password_confirmation: '',
       },
-      teste: 'teste'
+      tipoSenha: true
     }
   },
   created () {
     this.$emit("altera-titulo", 'Registro');
-    // this.$toast.success('Teste de mensagem', '')
-    // this.$toast.error('Teste de mensagem', '')
-    this.nome = this.$q.localStorage.getItem('nome');
-    // this.$router.push('/app');
   },
   methods: {
     registrar () {
       this.$axios.post('http://192.168.1.20:8000/api/register', this.user)
           .then((res) => {
-            console.log(res);
-            // this.$q.localStorage.set('user', res.data)
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
             this.$q.localStorage.set('token', res.data.token)
 
+            this.$toast.success('Cadastrado com sucesso');
+
             this.$router.replace('/app');
-
-            this.$toast.success('Salvo com sucesso');
-
           })
           .catch((err) => {
-            // console.log(err);
-            // this.$toast.error('Ocorreu um erro');
-            // this.teste = err.response.data.errors
-
             if (err.response.status == 422){
               this.teste = Object.values(err.response.data.errors).flat();
               this.$toast.error(this.teste[0]);
