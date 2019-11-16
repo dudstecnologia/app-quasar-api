@@ -83,7 +83,7 @@ export default {
     this.$emit("altera-titulo", 'Registro');
     // this.$toast.success('Teste de mensagem', '')
     // this.$toast.error('Teste de mensagem', '')
-    this.nome = this.$q.localStorage.getItem('user').token;
+    this.nome = this.$q.localStorage.getItem('token');
     // this.$router.push('/app');
   },
   methods: {
@@ -91,7 +91,13 @@ export default {
       this.$axios.post('http://127.0.0.1:8000/api/register', this.user)
           .then((res) => {
             console.log(res);
-            this.$q.localStorage.set('user', res.data)
+            // this.$q.localStorage.set('user', res.data)
+            this.$q.localStorage.set('name', res.data.name)
+            this.$q.localStorage.set('email', res.data.email)
+            this.$q.localStorage.set('token', res.data.token)
+
+            this.$router.push('/app');
+
             this.$toast.success('Salvo com sucesso');
 
           })

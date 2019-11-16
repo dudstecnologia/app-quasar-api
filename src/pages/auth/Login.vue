@@ -30,6 +30,12 @@
 
     <q-btn to="registro" label="Registrar" type="reset" color="secondary" class="full-width" />
 
+    <br>
+
+    <q-btn @click="back" label="Teste Voltar" type="reset" color="secondary" class="full-width" />
+
+    {{ token }}
+
   </div>
 </template>
 
@@ -40,16 +46,17 @@ export default {
       user: {
         email: '',
         password: ''
-      }
+      },
+      token: 'teste token'
     }
   },
   beforeCreate () {
     // console.log("Antes de Criar");
-    try {
-      if(this.$q.localStorage.getItem('user').token) {
-        this.$router.push('/');
-      }
-    } catch (e) {}
+    // try {
+    //   if(this.$q.localStorage.getItem('user').token) {
+    //     this.$router.push('/');
+    //   }
+    // } catch (e) {}
   },
   created () {
     this.$emit("altera-titulo", 'Login');
@@ -57,20 +64,31 @@ export default {
     //if(this.$q.localStorage.getItem('user').token) {
       // console.log("Possui token")
     //}
+    this.token = this.$q.localStorage.getItem('token');
   },
   methods: {
     logar () {
-      this.$axios.post('http://127.0.0.1:8000/api/login', this.user)
+      this.$axios.post('http://192.168.1.20:8000/api/login', this.user)
           .then((res) => {
             // console.log(res);
-            this.$q.localStorage.set('user', res.data)
-            this.$toast.success('Salvo com sucesso');
-            this.$router.push('/');
+            // this.$q.localStorage.set('token', res.data)
+            // this.$toast.success('Salvo com sucesso');
+            // this.$router.push('/');
+
+            this.$q.localStorage.set('name', res.data.name)
+            this.$q.localStorage.set('email', res.data.email)
+            this.$q.localStorage.set('token', res.data.token)
+
+            this.$router.push('/app');
           })
           .catch((err) => {
             console.log(err);
             this.$toast.error('Ocorreu um erro');
           });
+    },
+    back () {
+      console.log("Tentou Voltar Do Login")
+      history.back();
     }
   }
 }
