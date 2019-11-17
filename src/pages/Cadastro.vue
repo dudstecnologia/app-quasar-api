@@ -8,22 +8,19 @@
         outlined
         v-model="contato.nome"
         label="Nome *"
-        lazy-rules
-        />
+        required />
 
       <q-input
         type="tel"
         outlined
         v-model="contato.telefone"
-        label="Telefone"
-        lazy-rules />
+        label="Telefone" />
 
       <q-input
         type="email"
         outlined
         v-model="contato.email"
-        label="Email"
-        lazy-rules />
+        label="Email" />
 
       <div class="q-gutter-sm">
         <q-btn label="Salvar" type="submit" color="primary" class="full-width" />
@@ -45,13 +42,16 @@ export default {
   },
   methods: {
     salvar () {
+      this.$emit('progresso', true);
       this.$axios.post('/contatos', this.contato)
         .then((res) => {
+          this.$emit('progresso', false);
           this.contato = {};
           this.$refs.myForm.resetValidation();
           this.$toast.success('Salvo com sucesso');
         })
         .catch((err) => {
+          this.$emit('progresso', false);
           if (err.response.status == 422) {
             this.teste = Object.values(err.response.data.errors).flat();
             this.$toast.error(this.teste[0]);
