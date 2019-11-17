@@ -41,18 +41,38 @@ export default {
     }
   },
   created () {
-    this.name = this.$q.localStorage.getItem('name');
     if(this.id) {
-      this.$toast.success('Selecionou: ' + this.id);
+      this.getContato();
     }
   },
   methods: {
-    salvar () {
+    getContato() {
       this.$emit('progresso', true);
-      this.$axios.post('/contatos', this.contato)
+      this.$axios.get(`/contatos/${this.id}`)
         .then((res) => {
           this.$emit('progresso', false);
-          this.contato = {};
+          this.contato = res.data[0];
+        })
+        .catch((err) => {
+          this.$emit('progresso', false);
+          this.$toast.error('Ocorreu um erro ao buscar os dados do contato');
+        });
+    },
+    salvar () {
+
+      let metodo = 'post';
+      let url =  '/contatos';
+
+      if(this.id) {
+        metodo = 'put';
+        url =  `/contatos/${this.id}`;
+      }
+
+      this.$emit('progresso', true);
+      this.$axios({method: metodo, url: url, data: this.contato})
+        .then((res) => {
+          this.$emit('progresso', false);
+          if (!this.id) this.contato = {};
           this.$refs.myForm.resetValidation();
           this.$toast.success('Salvo com sucesso');
         })
