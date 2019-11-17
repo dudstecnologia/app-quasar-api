@@ -32,13 +32,19 @@
 
 <script>
 export default {
+  props: [
+    'id'
+  ],
   data () {
     return {
-      contato: {},
+      contato: {}
     }
   },
   created () {
     this.name = this.$q.localStorage.getItem('name');
+    if(this.id) {
+      this.$toast.success('Selecionou: ' + this.id);
+    }
   },
   methods: {
     salvar () {

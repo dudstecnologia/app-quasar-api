@@ -1,6 +1,21 @@
 <template>
   <q-page padding>
 
+    <!-- <q-dialog v-model="prompt" persistent>
+      <q-card style="min-width: 300px">
+        <q-card-section>
+          <div class="text-h6">Dados do Contato</div>
+        </q-card-section>
+
+        <cadastro></cadastro>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Add address" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog> -->
+
     <q-list bordered separator>
 
       <q-item clickable v-ripple v-for="c in contatos" :key="c.id" @click="selecionaContato(c.id)">
@@ -20,7 +35,7 @@
 export default {
   data () {
     return {
-      contatos: []
+      contatos: [],
     }
   },
   created () {
@@ -40,7 +55,7 @@ export default {
         });
     },
     selecionaContato(id) {
-      console.log('ID: ' + id);
+      this.$emit('seleciona-contato', id);
     }
   }
 }

@@ -32,7 +32,7 @@
       <q-list>
         <q-item-label header>Menu Principal</q-item-label>
 
-        <q-item clickable tag="a" @click="telaAtiva = 'Contatos'" :class="telaAtiva == 'Contatos' ? 'q-item--active' : '' ">
+        <q-item clickable tag="a" @click="abreTela('Contatos')" :class="telaAtiva == 'Contatos' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="people" />
           </q-item-section>
@@ -41,7 +41,7 @@
             <q-item-label caption>Lista de Contatos</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" @click="telaAtiva = 'Cadastro'" :class="telaAtiva == 'Cadastro' ? 'q-item--active' : '' ">
+        <q-item clickable tag="a" @click="abreTela('Cadastro')" :class="telaAtiva == 'Cadastro' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
@@ -50,7 +50,7 @@
             <q-item-label caption>Novo Contato</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" @click="telaAtiva = 'Perfil'" :class="telaAtiva == 'Perfil' ? 'q-item--active' : '' ">
+        <q-item clickable tag="a" @click="abreTela('Perfil')" :class="telaAtiva == 'Perfil' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="account_circle" />
           </q-item-section>
@@ -73,8 +73,8 @@
 
     <q-page-container>
 
-      <contatos v-if="telaAtiva == 'Contatos'" @progresso="alteraProgresso"></contatos>
-      <cadastro v-if="telaAtiva == 'Cadastro'" @progresso="alteraProgresso"></cadastro>
+      <contatos v-if="telaAtiva == 'Contatos'" @progresso="alteraProgresso" @seleciona-contato="selecionaContato"></contatos>
+      <cadastro v-if="telaAtiva == 'Cadastro'" @progresso="alteraProgresso" :id="id"></cadastro>
       <perfil v-if="telaAtiva == 'Perfil'" @progresso="alteraProgresso"></perfil>
 
     </q-page-container>
@@ -87,7 +87,8 @@ export default {
     return {
       leftDrawerOpen: false,
       telaAtiva: 'Contatos',
-      progresso: false
+      progresso: false,
+      id: null
     }
   },
   beforeCreate () {
@@ -98,11 +99,18 @@ export default {
       localStorage.removeItem('name')
       localStorage.removeItem('email')
       localStorage.removeItem('token')
-
       this.$router.push('/');
+    },
+    abreTela(tela) {
+      this.id = null;
+      this.telaAtiva = tela;
     },
     alteraProgresso (status) {
       this.progresso = status;
+    },
+    selecionaContato(id) {
+      this.id = id;
+      this.telaAtiva = 'Cadastro';
     }
   },
   watch: {
