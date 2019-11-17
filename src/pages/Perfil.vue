@@ -4,6 +4,10 @@
       @submit="atualizar"
       class="q-gutter-md" >
 
+      <img :src="imagemSelecionada">
+
+      <img :src="novaImagem">
+
       <q-input
         outlined
         v-model="user.name"
@@ -44,10 +48,23 @@
       </div>
 
     </q-form>
+
+    <br>
+
+    <q-btn @click="captureImage" label="Teste Crop" color="positive" class="full-width" />
+
+    <p>{{ imagemSelecionada }}</p>
+    <p>{{ novaImagem }}</p>
   </q-page>
 </template>
 
 <script>
+
+// document.addEventListener('deviceready', () => {
+//   // it's only now that we are sure
+//   // the event has triggered
+// }, false)
+
 export default {
   data () {
     return {
@@ -58,7 +75,9 @@ export default {
         password_confirmation: '',
       },
       tipoSenha: true,
-      user_id: ''
+      user_id: '',
+      imagemSelecionada: '',
+      novaImagem: '',
     }
   },
   created () {
@@ -79,6 +98,33 @@ export default {
           console.log(err);
           this.$emit('progresso', false);
         });
+    },
+    captureImage () {
+      navigator.camera.getPicture(imgData => { // on success
+          // this.imagemSelecionada = `data:image/jpeg;base64,${imgData}`
+          this.imagemSelecionada = imgData;
+
+          var app = this;
+
+          plugins.crop(function success (data) {
+              // var image = document.getElementById('myImage');
+              // image.src = data;
+              app.novaImagem = `data:image/jpeg;base64,${data}`;
+              // app.imagemSelecionada = data;
+              // app.novaImagem = data.substring(0, data.indexOf('?'));
+              // app.novaImagem = data;
+          },
+          function fail () {}, imgData, { quality: 100 });
+
+        }, () => {}, {
+          quality: 50,
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          mediaType: Camera.MediaType.PICTURE,
+          encodingType: Camera.EncodingType.JPEG,
+          saveToPhotoAlbum: true,
+        }
+      )
     },
     atualizar () {
       /*
