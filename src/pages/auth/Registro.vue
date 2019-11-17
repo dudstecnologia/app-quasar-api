@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     registrar () {
-      this.$axios.post('http://192.168.10.103:8000/api/register', this.user)
+      this.$axios.post('/register', this.user)
           .then((res) => {
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
@@ -85,7 +85,7 @@ export default {
             this.$router.replace('/app');
           })
           .catch((err) => {
-            if (err.response.status == 422){
+            if (err.response.status == 422) {
               this.teste = Object.values(err.response.data.errors).flat();
               this.$toast.error(this.teste[0]);
             } else {

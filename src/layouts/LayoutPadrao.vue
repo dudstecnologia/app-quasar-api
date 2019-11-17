@@ -83,6 +83,9 @@ export default {
       telaAtiva: 'Contatos'
     }
   },
+  beforeCreate () {
+    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${this.$q.localStorage.getItem('token')}`;
+  },
   methods: {
     logoff () {
       localStorage.removeItem('name')

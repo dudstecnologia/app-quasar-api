@@ -8,14 +8,19 @@
 export default {
   data () {
     return {
-      name: ''
+      name: '',
     }
   },
-  created () {
-    this.name = this.$q.localStorage.getItem('name');
-  },
   methods: {
-
+    user () {
+      this.$axios.get('/user', this.user)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 }
 </script>
