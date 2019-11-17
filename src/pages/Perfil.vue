@@ -40,7 +40,7 @@
         lazy-rules />
 
       <div class="q-gutter-sm">
-        <q-btn label="Atualizar" type="submit" color="primary" class="full-width" />
+        <q-btn label="Atualizar (Em Breve)" type="submit" color="primary" class="full-width" />
       </div>
 
     </q-form>
