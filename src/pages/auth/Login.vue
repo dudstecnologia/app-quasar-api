@@ -57,13 +57,13 @@ export default {
   },
   methods: {
     logar () {
-      this.$axios.post('http://192.168.1.20:8000/api/login', this.user)
+      this.$axios.post('http://192.168.10.103:8000/api/login', this.user)
           .then((res) => {
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
             this.$q.localStorage.set('token', res.data.token)
 
-            this.$router.push('/contatos');
+            this.$router.push('/app');
           })
           .catch((err) => {
             if(err.response.status == 401) {

@@ -11,7 +11,7 @@
           aria-label="Menu" />
 
         <q-toolbar-title>
-          {{ titulo }}
+          {{ telaAtiva }}
         </q-toolbar-title>
 
       </q-toolbar>
@@ -26,7 +26,7 @@
       <q-list>
         <q-item-label header>Menu Principal</q-item-label>
 
-        <q-item clickable tag="a" to="contatos" @click="titulo = 'Contatos'">
+        <q-item clickable tag="a" @click="telaAtiva = 'Contatos'" :class="telaAtiva == 'Contatos' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="people" />
           </q-item-section>
@@ -35,7 +35,7 @@
             <q-item-label caption>Lista de Contatos</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" to="cadastro" @click="titulo = 'Cadastro'">
+        <q-item clickable tag="a" @click="telaAtiva = 'Cadastro'" :class="telaAtiva == 'Cadastro' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
@@ -44,7 +44,7 @@
             <q-item-label caption>Novo Contato</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable tag="a" to="perfil" @click="titulo = 'Perfil'">
+        <q-item clickable tag="a" @click="telaAtiva = 'Perfil'" :class="telaAtiva == 'Perfil' ? 'q-item--active' : '' ">
           <q-item-section avatar>
             <q-icon name="account_circle" />
           </q-item-section>
@@ -66,7 +66,11 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+
+      <contatos v-if="telaAtiva == 'Contatos'"></contatos>
+      <cadastro v-if="telaAtiva == 'Cadastro'"></cadastro>
+      <perfil v-if="telaAtiva == 'Perfil'"></perfil>
+
     </q-page-container>
   </q-layout>
 </template>
@@ -76,7 +80,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      titulo: 'Contatos'
+      telaAtiva: 'Contatos'
     }
   },
   methods: {
@@ -86,6 +90,11 @@ export default {
       localStorage.removeItem('token')
 
       this.$router.push('/');
+    }
+  },
+  watch: {
+    telaAtiva () {
+      this.leftDrawerOpen = false;
     }
   }
 }

@@ -1,12 +1,12 @@
 import { Platform } from 'quasar'
 
 const verificaAutenticacao = (to, from, next) => {
-  if(from.path == '/contatos' && to.path == '/' && localStorage.getItem('token') && Platform.is.cordova) {
+  if(from.path == '/app' && to.path == '/' && localStorage.getItem('token') && Platform.is.cordova) {
     navigator.app.exitApp();
   }
 
-  if(localStorage.getItem('token') && to.path == '/') {
-    next('/contatos');
+  if(localStorage.getItem('token') && to.path != '/app') {
+    next('/app');
   }
 
   next();
@@ -26,25 +26,8 @@ const routes = [
     ],
   },
   {
-    path: '/contatos',
-    component: () => import('layouts/LayoutPadrao.vue'),
-    children: [
-      {
-        path: '/contatos',
-        component: () => import('pages/Contatos.vue'),
-        beforeEnter: verificaAutenticacao
-      },
-      {
-        path: '/cadastro',
-        component: () => import('pages/Cadastro.vue'),
-        beforeEnter: verificaAutenticacao
-      },
-      {
-        path: '/perfil',
-        component: () => import('pages/Perfil.vue'),
-        beforeEnter: verificaAutenticacao
-      }
-    ]
+    path: '/app',
+    component: () => import('layouts/LayoutPadrao.vue')
   }
 ]
 

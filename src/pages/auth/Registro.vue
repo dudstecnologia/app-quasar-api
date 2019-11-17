@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     registrar () {
-      this.$axios.post('http://192.168.1.20:8000/api/register', this.user)
+      this.$axios.post('http://192.168.10.103:8000/api/register', this.user)
           .then((res) => {
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
@@ -82,7 +82,7 @@ export default {
 
             this.$toast.success('Cadastrado com sucesso');
 
-            this.$router.replace('/contatos');
+            this.$router.replace('/app');
           })
           .catch((err) => {
             if (err.response.status == 422){

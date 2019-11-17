@@ -9,6 +9,10 @@ import routes from './routes'
 Vue.use(VueRouter);
 Vue.use(VueIziToast);
 
+Vue.component('contatos', require('../pages/Contatos').default);
+Vue.component('cadastro', require('../pages/Cadastro').default);
+Vue.component('perfil', require('../pages/Perfil').default);
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation
