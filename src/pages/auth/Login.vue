@@ -9,16 +9,14 @@
         outlined
         v-model="user.email"
         label="Seu email *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o email']" />
+        required />
 
       <q-input
         :type="tipoSenha ? 'password' : 'text'"
         outlined
         v-model="user.password"
         label="Sua Senha *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']" >
+        required >
         <template v-slot:append>
           <q-icon
             :name="tipoSenha ? 'visibility_off' : 'visibility'"
@@ -57,15 +55,17 @@ export default {
   },
   methods: {
     logar () {
+      this.$emit('progresso', true);
       this.$axios.post('/login', this.user)
           .then((res) => {
+            this.$emit('progresso', false);
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
             this.$q.localStorage.set('token', res.data.token)
-
             this.$router.push('/app');
           })
           .catch((err) => {
+            this.$emit('progresso', false);
             if(err.response.status == 401) {
               this.$toast.error('Não foi possível fazer o login, verifique seus dados');
             } else if (err.response.status == 422){

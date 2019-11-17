@@ -9,24 +9,21 @@
         outlined
         v-model="user.name"
         label="Seu nome *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o nome']" />
+        required />
 
       <q-input
         type="email"
         outlined
         v-model="user.email"
         label="Seu email *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o email']" />
+        required />
 
       <q-input
         :type="tipoSenha ? 'password' : 'text'"
         outlined
         v-model="user.password"
         label="Sua Senha *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']" >
+        required >
         <template v-slot:append>
           <q-icon
             :name="tipoSenha ? 'visibility_off' : 'visibility'"
@@ -41,8 +38,7 @@
         outlined
         v-model="user.password_confirmation"
         label="Confirme a Senha *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']" />
+        required />
 
       <div class="q-gutter-sm">
         <q-btn label="Registrar" type="submit" color="primary" class="full-width" />
@@ -74,8 +70,10 @@ export default {
   },
   methods: {
     registrar () {
+      this.$emit('progresso', true);
       this.$axios.post('/register', this.user)
           .then((res) => {
+            this.$emit('progresso', false);
             this.$q.localStorage.set('name', res.data.name)
             this.$q.localStorage.set('email', res.data.email)
             this.$q.localStorage.set('token', res.data.token)
@@ -85,6 +83,7 @@ export default {
             this.$router.replace('/app');
           })
           .catch((err) => {
+            this.$emit('progresso', false);
             if (err.response.status == 422) {
               this.teste = Object.values(err.response.data.errors).flat();
               this.$toast.error(this.teste[0]);

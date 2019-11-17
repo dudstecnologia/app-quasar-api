@@ -8,24 +8,21 @@
         outlined
         v-model="user.name"
         label="Seu nome *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o nome']" />
+        lazy-rules />
 
       <q-input
         type="email"
         outlined
         v-model="user.email"
         label="Seu email *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe o email']" />
+        lazy-rules />
 
       <q-input
         :type="tipoSenha ? 'password' : 'text'"
         outlined
         v-model="user.password"
         label="Sua Senha *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']" >
+        lazy-rules >
         <template v-slot:append>
           <q-icon
             :name="tipoSenha ? 'visibility_off' : 'visibility'"
@@ -40,8 +37,7 @@
         outlined
         v-model="user.password_confirmation"
         label="Confirme a Senha *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Informe a senha']" />
+        lazy-rules />
 
       <div class="q-gutter-sm">
         <q-btn label="Atualizar" type="submit" color="primary" class="full-width" />
@@ -70,14 +66,18 @@ export default {
   },
   methods: {
     getUser () {
+      this.$emit('progresso', true);
       this.$axios.get('/user', this.user)
         .then((res) => {
           this.user.name = res.data.name;
           this.user.email = res.data.email;
           this.user_id = res.data.id;
+
+          this.$emit('progresso', false);
         })
         .catch((err) => {
           console.log(err);
+          this.$emit('progresso', false);
         });
     },
     atualizar () {

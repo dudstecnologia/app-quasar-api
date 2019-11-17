@@ -8,11 +8,17 @@
           {{ titulo }}
         </q-toolbar-title>
 
+        <q-circular-progress
+          v-if="progresso"
+          indeterminate
+          size="20px"
+          color="withe" />
+
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <router-view @altera-titulo="alteraTitulo" />
+      <router-view @altera-titulo="alteraTitulo" @progresso="alteraProgresso" />
     </q-page-container>
 
   </q-layout>
@@ -22,13 +28,17 @@
 export default {
   data () {
     return {
-      titulo: ''
+      titulo: '',
+      progresso: false
     }
   },
   methods: {
     alteraTitulo (titulo)
     {
       this.titulo = titulo;
+    },
+    alteraProgresso (status) {
+      this.progresso = status;
     }
   }
 }

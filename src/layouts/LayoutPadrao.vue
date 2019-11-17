@@ -14,6 +14,12 @@
           {{ telaAtiva }}
         </q-toolbar-title>
 
+        <q-circular-progress
+          v-if="progresso"
+          indeterminate
+          size="20px"
+          color="withe" />
+
       </q-toolbar>
     </q-header>
 
@@ -67,9 +73,9 @@
 
     <q-page-container>
 
-      <contatos v-if="telaAtiva == 'Contatos'"></contatos>
-      <cadastro v-if="telaAtiva == 'Cadastro'"></cadastro>
-      <perfil v-if="telaAtiva == 'Perfil'"></perfil>
+      <contatos v-if="telaAtiva == 'Contatos'" @progresso="alteraProgresso"></contatos>
+      <cadastro v-if="telaAtiva == 'Cadastro'" @progresso="alteraProgresso"></cadastro>
+      <perfil v-if="telaAtiva == 'Perfil'" @progresso="alteraProgresso"></perfil>
 
     </q-page-container>
   </q-layout>
@@ -80,7 +86,8 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      telaAtiva: 'Contatos'
+      telaAtiva: 'Contatos',
+      progresso: false
     }
   },
   beforeCreate () {
@@ -93,6 +100,9 @@ export default {
       localStorage.removeItem('token')
 
       this.$router.push('/');
+    },
+    alteraProgresso (status) {
+      this.progresso = status;
     }
   },
   watch: {

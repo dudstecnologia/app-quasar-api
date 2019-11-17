@@ -35,6 +35,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          this.$toast.error('Ocorreu um erro ao buscar os contatos');
         });
     },
     selecionaContato(id) {
