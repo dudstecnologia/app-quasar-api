@@ -4,9 +4,9 @@
       @submit="atualizar"
       class="q-gutter-md" >
 
-      <img :src="imagemSelecionada">
+      <img :src="imagemSelecionada" :ratio="1" style="height: 100px; max-width: 110px">
 
-      <img :src="novaImagem">
+      <img :src="novaImagem" :ratio="1" style="height: 100px; max-width: 110px">
 
       <q-input
         outlined
@@ -101,6 +101,11 @@ export default {
     },
     captureImage () {
       navigator.camera.getPicture(imgData => { // on success
+
+      // Estudo
+      // https://ourcodeworld.com/articles/read/80/how-to-convert-a-image-from-the-device-to-base64-with-javascript-in-cordova
+      // https://ourcodeworld.com/articles/read/22/solve-native-path-of-android-content-if-resolvelocalfilesystemurl-doesn-t-work
+
           // this.imagemSelecionada = `data:image/jpeg;base64,${imgData}`
           this.imagemSelecionada = imgData;
 
@@ -109,15 +114,18 @@ export default {
           plugins.crop(function success (data) {
               // var image = document.getElementById('myImage');
               // image.src = data;
-              app.novaImagem = `data:image/jpeg;base64,${data}`;
+              // app.novaImagem = `data:image/jpeg;base64,${data}`;
               // app.imagemSelecionada = data;
               // app.novaImagem = data.substring(0, data.indexOf('?'));
-              // app.novaImagem = data;
+              app.novaImagem = data;
+
+              // app.novaImagem = Base64.encode(data);
           },
           function fail () {}, imgData, { quality: 100 });
 
         }, () => {}, {
           quality: 50,
+          // destinationType: Camera.DestinationType.DATA_URL,
           destinationType: Camera.DestinationType.FILE_URI,
           sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
           mediaType: Camera.MediaType.PICTURE,
