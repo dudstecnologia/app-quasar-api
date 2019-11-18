@@ -7,7 +7,8 @@ import axios from 'axios'
 // Note that if we wouldn't set any config here we do not need
 // a named export, as we could just `import axios from 'axios'`
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.1.20:8000/api'
+  // PROD = https://dudstecnologia.com.br/api-laravel-cursos/api
+  baseURL: 'https://dudstecnologia.com.br/api-laravel-cursos/api'
 })
 
 // for use inside Vue files through this.$axios
